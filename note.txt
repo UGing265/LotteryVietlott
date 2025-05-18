@@ -1,0 +1,14 @@
+- WebContent/
+  - index.jsp
+  - login.jsp
+  - register.jsp
+  - lottery.jsp
+- src/
+  - com/
+    - lottery/
+      - UserServlet.java
+      - LotteryServlet.java
+      - DBUtil.java
+      - LotteryResult.java
+- WEB-INF/
+  - web.xml
