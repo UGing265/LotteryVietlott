@@ -12,3 +12,14 @@
       - LotteryResult.java
 - WEB-INF/
   - web.xml
+
+
+
+ trang web đơn giản trò chơi vé số đơn giản. từ 1 đến 9999 số. gồm URl /resgiter, /login và /lottery
+
+đăng ký/login (data) -> web -> java -> sql 
+mua tối đa 20 vé -> web -> java -> sql -> trả data java -> display số vé đã mua
+sau 1 phút sổ số data -> lấy data từ sql (lottery ticker)-> java -> display đã trúng hay không
+ 
+
+công cụ website tomcat, netbean jdk 8 java (core) và SQL server
