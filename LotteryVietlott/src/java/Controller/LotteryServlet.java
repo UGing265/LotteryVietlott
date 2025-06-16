@@ -1,10 +1,11 @@
-package lottery;
+package Controller;
 
 /**
  *
  * @author HP
  */
 
+import Utils.DBUtil;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class LotteryServlet extends HttpServlet {
                 }
             }
             response.sendRedirect("lottery.html");
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
