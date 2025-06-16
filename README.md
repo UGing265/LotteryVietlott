@@ -9,7 +9,7 @@ Dự án này là một ứng dụng web trò chơi vé số đơn giản đư�
 - [Cài Đặt](#cài-đặt)
 - [Sử Dụng](#sử-dụng)
 - [Cấu Trúc Dự Án](#cấu-trúc-dự-án)
-- [MShiroru Thuyết Kế](#mshiroru-thuyết-kế)
+- [MShiroru Thuyết Kế](#Tác-giả-MShiroru)
 
 ## Giới Thiệu
 
