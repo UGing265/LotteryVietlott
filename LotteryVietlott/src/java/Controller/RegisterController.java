@@ -6,7 +6,6 @@
 package Controller;
 
 import DAO.UserDAO;
-import DTO.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,39 +13,35 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author HP
  */
-@WebServlet(name="LoginController", urlPatterns={"/LoginController"})
-public class LoginController extends HttpServlet {
+@WebServlet(name="RegisterController", urlPatterns={"/RegisterController"})
+public class RegisterController extends HttpServlet {
    
-   public String  SUCCESS = "lottery.html";
-   public String ERROR = "login.jsp";
+    public String SUCCESS = "login.jsp";
+    public String ERROR = "register.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-      String url = ERROR;
-      try{
-          HttpSession session = request.getSession();
-          String name = request.getParameter("username");
-          String pass = request.getParameter("password");
-          UserDAO userDAO = new UserDAO();
-          User user = userDAO.checkLogin(name,pass);
-          if(user != null){
-              session.setAttribute("USERID", user.getUserID());
-              url = SUCCESS;
-              System.out.println("success");
-          }
-          
-          
-      }catch(Exception e){
-          e.printStackTrace();
-      }finally{
-          request.getRequestDispatcher(url).forward(request, response);
-      }
+        String url = ERROR;
+        try{
+            String user = request.getParameter("username");
+            String pass = request.getParameter("password");
+            UserDAO userDAO = new UserDAO();
+            boolean check = userDAO.checkRegister(user,pass);
+            if(check){
+                request.setAttribute("ERROR", "You got Error");
+            }
+            
+            
+            
+        }catch(Exception e){
+        }finally{
+            request.getRequestDispatcher(url).forward(request, response);
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
