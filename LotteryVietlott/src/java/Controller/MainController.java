@@ -21,6 +21,12 @@ public class MainController extends HttpServlet {
 
     public static final String REGISTER = "Register";
     public static final String REGISTER_CONTROLLER = "RegisterController";
+    
+    public static final String LOTTERY_RESULT = "LotteryResult";
+    public static final String LOTTERY_RESULT_CONTROLLER = "LotteryResultController";
+    
+    public static final String BUY_TICKET = "BuyTicketAuto";
+    public static final String BUY_TICKET_CONTROLLER = "BuyTicketAutoController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,6 +37,10 @@ public class MainController extends HttpServlet {
                 url = LOGIN_CONTROLLER;
             } else if (REGISTER.equals(action)) {
                     url = REGISTER_CONTROLLER;
+            } else if (LOTTERY_RESULT.equals(action)) {
+                    url = LOTTERY_RESULT_CONTROLLER;
+            } else if (BUY_TICKET.equals(action)) {
+                    url = BUY_TICKET_CONTROLLER;
             }
 
         } catch (Exception e) {

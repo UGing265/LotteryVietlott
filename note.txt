@@ -15,11 +15,34 @@
 
 
 
- trang web đơn giản trò chơi vé số đơn giản. từ 1 đến 9999 số. gồm URl /resgiter, /login và /lottery
+ trang web đơn giản trò chơi vé số đơn giản. từ 00001 đến 99999 số. gồm URl /resgiter, /login và /lottery
 
 đăng ký/login (data) -> web -> java -> sql 
-mua tối đa 20 vé -> web -> java -> sql -> trả data java -> display số vé đã mua
+mua tối đa 50 vé -> web -> java -> sql -> trả data java -> display số vé đã mua
 sau 1 phút sổ số data -> lấy data từ sql (lottery ticker)-> java -> display đã trúng hay không
- 
+
+chữ số tính theo số đuôi
+Giải Đặc Biệt: 1 số (5 chữ số) 2 tỷ
+Top 1: 5 số (5 chữ số)  400 triệu
+Top 2: 10 số (4 chữ số) 30 triệu
+Top 3: 12 số (4 chữ số) 10 triệu
+Top 4: 13 số (4 chữ số) 4 triệu
+Top 5: 15 số (3 chữ số) 1 triệu
+Top 6: 15 số (3 chữ số) 200 nghìn
+(Treo giải không được trùng nhau)
+
+2 lựa chọn mua thủ công hoặc mua số tự động
 
 công cụ website tomcat, netbean jdk 8 java (core) và SQL server
+
+
+
+
+CREATE TABLE LotteryTickets (
+    ticketID INT IDENTITY(1,1) PRIMARY KEY,   -- Tự tăng, khóa chính
+    userID INT NULL,                          -- Cho phép NULL
+    ticketNumber INT NULL,                    -- Cho phép NULL
+    isWin BIT NOT NULL DEFAULT 0,             -- Mặc định 0
+    isCheck BIT NOT NULL DEFAULT 0,           -- Mặc định 0
+    purchaseTime DATETIME NOT NULL DEFAULT GETDATE() -- Mặc định là thời điểm hiện tại
+);
