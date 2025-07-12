@@ -36,10 +36,7 @@ public class LotteryResultController extends HttpServlet {
                 int randomNumber = rand.nextInt(99999) + 1;
                 randomNumbers.add(randomNumber);
             }
-            //System.out.println("Danh sách số ngẫu nhiên:");
-            for (int number : randomNumbers) {
-                //System.out.println(number);
-            }
+           
             session.setAttribute("RANDOM", randomNumbers);
 
         } catch (Exception e) {

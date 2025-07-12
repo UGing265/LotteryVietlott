@@ -36,13 +36,84 @@ Top 6: 15 số (3 chữ số) 200 nghìn
 công cụ website tomcat, netbean jdk 8 java (core) và SQL server
 
 
+link ERD
+https://drive.google.com/file/d/1CBHL3yUrGDQaZ_rQXzGVKnKCiTX7idXD/view?usp=sharing
+
+
+
+
+
+
 
 
 CREATE TABLE LotteryTickets (
-    ticketID INT IDENTITY(1,1) PRIMARY KEY,   -- Tự tăng, khóa chính
-    userID INT NULL,                          -- Cho phép NULL
-    ticketNumber INT NULL,                    -- Cho phép NULL
-    isWin BIT NOT NULL DEFAULT 0,             -- Mặc định 0
-    isCheck BIT NOT NULL DEFAULT 0,           -- Mặc định 0
-    purchaseTime DATETIME NOT NULL DEFAULT GETDATE() -- Mặc định là thời điểm hiện tại
+    ticketID INT IDENTITY(1,1) PRIMARY KEY,      -- ID tự động tăng
+    roundID INT NOT NULL,                        -- Liên kết với kỳ quay
+    userID INT NULL,                             -- ID người chơi
+    ticketNumber VARCHAR(10) NOT NULL,           -- Số vé (ví dụ 12345)
+    isWin BIT NOT NULL DEFAULT 0,                -- 0 = chưa trúng, 1 = trúng
+    isCheck BIT NOT NULL DEFAULT 0,              -- Đã kiểm tra?
+    timePurchase DATETIME NOT NULL DEFAULT GETDATE(), -- Thời gian mua
+    FOREIGN KEY (roundID) REFERENCES Rounds(roundID)
 );
+
+
+CREATE TABLE PrizeTiers (
+    tierID INT IDENTITY(1,1) PRIMARY KEY,
+    tierName NVARCHAR(50) NOT NULL,        -- Ví dụ: 'Giải Đặc Biệt', 'Top 1', ...
+    digitLength INT NOT NULL,              -- Số chữ số để xét (đuôi)
+    prizeAmount BIGINT NOT NULL,           -- Giá trị giải (VNĐ)
+    prizeCount INT NOT NULL                -- Số lượng giải trong loại đó
+);
+INSERT INTO PrizeTiers (tierName, digitLength, prizeAmount, prizeCount) VALUES
+(N'Giải Đặc Biệt', 5, 2000000000, 1),
+(N'Top 1', 5, 400000000, 5),
+(N'Top 2', 4, 30000000, 10),
+(N'Top 3', 4, 10000000, 12),
+(N'Top 4', 4, 4000000, 13),
+(N'Top 5', 3, 1000000, 15),
+(N'Top 6', 3, 200000, 15);
+
+
+CREATE TABLE WinningNumbers (
+    winID INT IDENTITY(1,1) PRIMARY KEY,
+    roundID INT NOT NULL,                         -- Kỳ quay
+    tierID INT NOT NULL,                          -- Loại giải
+    winningNumber VARCHAR(10) NOT NULL,           -- Đuôi số trúng
+    FOREIGN KEY (roundID) REFERENCES Rounds(roundID),
+    FOREIGN KEY (tierID) REFERENCES PrizeTiers(tierID)
+);
+
+CREATE TABLE Rounds (
+    roundID INT IDENTITY(1,1) PRIMARY KEY,  -- Khóa chính, tự tăng
+    roundDate DATE NOT NULL,                -- Ngày quay số
+    status NVARCHAR(20) NOT NULL            -- Trạng thái (Open, Closed, Settled, ...)
+);
+
+
+
+
+
+
+
+
+
+
+
+thuật toán gợi ý
+for (Integer ticketNumber : tickets) {
+    for (PrizeTier tier : prizeTiers) {
+        int digitLength = tier.getDigitLength();
+        String ticketSuffix = getLastDigits(ticketNumber, digitLength);
+
+        List<String> winningNumbers = getWinningNumbers(roundID, tier.getTierID());
+
+        for (String winNum : winningNumbers) {
+            if (ticketSuffix.equals(winNum)) {
+                // TRÚNG GIẢI
+                markAsWin(ticketNumber, tier);
+            }
+        }
+    }
+}
+

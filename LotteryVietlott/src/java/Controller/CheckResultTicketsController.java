@@ -14,40 +14,42 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
  * @author HP
  */
-@WebServlet(name = "BuyTicketAutoController", urlPatterns = {"/BuyTicketAutoController"})
-public class BuyTicketAutoController extends HttpServlet {
+@WebServlet(name = "CheckResultTicketsController", urlPatterns = {"/CheckResultTicketsController"})
+public class CheckResultTicketsController extends HttpServlet {
 
-    public String home_page = "lottery.jsp";
+    public String page = "lotteryResult.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = home_page;
+        String url = page;
         try {
             HttpSession session = request.getSession();
             String userID = (String) session.getAttribute("USERID");
             int roundID = (int) session.getAttribute("ROUND_NUMBER");
-            int numTickets = Integer.parseInt(request.getParameter("numTickets"));
-
-            Random rand = new Random();
-            ArrayList<Integer> randomNumbers = new ArrayList<>();
-            for (int i = 0; i < numTickets; i++) {
-                int randomNum = rand.nextInt(99999) + 1;
-                randomNumbers.add(randomNum);
-            }
-
             LotteryDAO lotteryDAO = new LotteryDAO();
-            boolean check = lotteryDAO.insertTickets(userID, randomNumbers,roundID);
-
-            if (check) {
-                System.out.println(randomNumbers.size());
-                session.setAttribute("TICKETS", randomNumbers);
+            ArrayList<Integer> winningNumber = lotteryDAO.getWinNumByRoundID(roundID);
+            ArrayList<Integer> tickets = lotteryDAO.getTicketsByUserID(userID, roundID);
+            int flag = 0;
+            System.out.println("winn: "+winningNumber);
+            System.out.println("tickets: " + tickets);
+            for (int t : tickets) {
+                   for(int w : winningNumber){
+                       if(t == w){
+                           System.out.println("this tickets is win:"+t);
+                           flag=1;
+                       }
+                   }
+                }
+            if(flag == 1){
+                request.setAttribute("SUCCESS", "WINNNNN");
+            }else{
+                request.setAttribute("ERROR", "YOU LOSE");
             }
 
         } catch (Exception e) {
@@ -55,6 +57,14 @@ public class BuyTicketAutoController extends HttpServlet {
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
+    }
+
+    public String getLastDigits(int number, int length) {
+        String numStr = String.format("%0" + length + "d", number);  // zero-padding nếu cần
+        if (numStr.length() <= length) {
+            return numStr;
+        }
+        return numStr.substring(numStr.length() - length);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

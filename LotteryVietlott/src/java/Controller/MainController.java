@@ -23,10 +23,24 @@ public class MainController extends HttpServlet {
     public static final String REGISTER_CONTROLLER = "RegisterController";
     
     public static final String LOTTERY_RESULT = "LotteryResult";
+    public static final String LOTTERY_RESULTGO = "LotteryResultGO";
     public static final String LOTTERY_RESULT_CONTROLLER = "LotteryResultController";
+    public static final String LOTTERY_RESULT_PAGE = "lotteryResult.jsp";
     
     public static final String BUY_TICKET = "BuyTicketAuto";
-    public static final String BUY_TICKET_CONTROLLER = "BuyTicketAutoController";
+    public static final String BUY_TICKET_CONTROLLER = "BuyTicketAutoController";    
+    
+    public static final String SAVE_DB = "saveDB";
+    public static final String SAVE_DB_CONTROLLER = "saveDBController";
+    
+    public static final String START_ROUND = "startRound";
+    public static final String START_ROUND_CONTROLLER = "StartRoundController";
+    
+    public static final String END_ROUND = "endRound";
+    public static final String END_ROUND_CONTROLLER = "EndRoundController";
+    
+    public static final String CHECK_RESULT_TICKETS = "CheckResultTickets";
+    public static final String CHECK_RESULT_TICKETS_CONTROLLER = "CheckResultTicketsController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -38,11 +52,20 @@ public class MainController extends HttpServlet {
             } else if (REGISTER.equals(action)) {
                     url = REGISTER_CONTROLLER;
             } else if (LOTTERY_RESULT.equals(action)) {
+                    url = LOTTERY_RESULT_PAGE;
+            } else if (LOTTERY_RESULTGO.equals(action)) {
                     url = LOTTERY_RESULT_CONTROLLER;
             } else if (BUY_TICKET.equals(action)) {
                     url = BUY_TICKET_CONTROLLER;
+            } else if (START_ROUND.equals(action)) {
+                    url = START_ROUND_CONTROLLER;
+            } else if (END_ROUND.equals(action)) {
+                    url = END_ROUND_CONTROLLER;
+            } else if (SAVE_DB.equals(action)) {
+                    url = SAVE_DB_CONTROLLER;
+            } else if (CHECK_RESULT_TICKETS.equals(action)) {
+                    url = CHECK_RESULT_TICKETS_CONTROLLER;
             }
-
         } catch (Exception e) {
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

@@ -5,6 +5,7 @@
 
 package Controller;
 
+import DAO.RoundDAO;
 import DAO.UserDAO;
 import DTO.User;
 import java.io.IOException;
@@ -34,8 +35,10 @@ public class LoginController extends HttpServlet {
           String name = request.getParameter("username");
           String pass = request.getParameter("password");
           UserDAO userDAO = new UserDAO();
+          RoundDAO roundDAO = new RoundDAO();
           User user = userDAO.checkLogin(name,pass);
           if(user != null){
+              session.setAttribute("ROUND_NUMBER", roundDAO.getIDbyRound());
               session.setAttribute("USERID", user.getUserID());
               url = SUCCESS;
               System.out.println("success");

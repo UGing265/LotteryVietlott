@@ -15,7 +15,7 @@
         <h2>Buy Lottery Tickets</h2>
         <form action="MainController" method="POST">
             <label for="num_tickets">Number of Tickets auto (Max 50):</label>
-            <input type="number" name="numTickets" max="50" required><br>
+            <input type="number" name="numTickets" max="9000" required><br>
             <button type="submit" name="action" value="BuyTicketAuto">Buy Tickets</button>
         </form><br><br><br>
         

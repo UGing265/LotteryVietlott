@@ -11,20 +11,28 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.dtailwindcss.com"></script>
     </head>
     <body>
-        <button type="submit" name="action" value="BuyTicket">Save Database</button>
-        <button type="submit" name="action" value="BuyTicket">Check Result from Database</button>
-        <button type="submit" name="action" value="BuyTicket">Start Random new Result</button>
-        
-        
+        <form action="MainController" method="POST">
+            <button name="action" value="startRound">Start Rounds</button><br>
+            <button name="action" value="endRound">End Rounds</button><br>
+            <button name="action" value="saveDB">Save Result Database</button><br>
+            <button name="action" value="CheckResultTickets">Check Result from Database</button><br>
+            <button name="action" value="LotteryResultGO">Start Random new Result</button><br>
+        </form>
+
+
+
         <p>${sessionScope.RANDOM}</p>
-        
-        <div class="flex flex-wrap gap-5">
-    <c:forEach var="num" items="${RANDOM}">
-        <span class="px-2 py-1 bg-gray-200 rounded">${num}</span>
-    </c:forEach>
-</div>
-    </body>
+
+        <c:forEach var="num" items="${RANDOM}">
+            <span>${num}</span>
+        </c:forEach>
+            
+            <p>${requestScope.SUCCESS}</p>
+            <p>${requestScope.ERROR}</p>
+            <p>rounds numbers is ${sessionScope.ROUND_NUMBER}</p>
+    </div>
+</body>
 </html>
